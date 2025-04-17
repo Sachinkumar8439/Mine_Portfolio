@@ -38,7 +38,7 @@
       </div>
       <p
         style="margin: 0px;padding: 5px 0px;font-family:sans-serif;font-size: 30px; font-weight: 300;color: rgb(186, 224, 233); width: fit-content; border-radius: 2px;">
-        Soacial Links <span style="font-size: 15px;">/</span></p>
+        Social Links <span style="font-size: 15px;">/</span></p>
       <div style="padding: 5px;width: fit-content;margin: 2px;" class="contact__socials">
         <a href="https://www.linkedin.com/in/sachin-kumar-614372259/" target="_blank" rel="noopener noreferrer"><i
             class="ri-linkedin-fill"></i></a>
@@ -274,19 +274,19 @@
       </section>
 
       <section class="section__container hiring-form" id="contact">
-        
-        <form>
+
+        <form onsubmit="send(event)">
           <h2> <i class="ri-contacts-fill"></i> Contact me</h2>
           <input type="text" placeholder="name" id="name" required>
           <input type="email" placeholder="email" id="email" required>
           <input type="tel" placeholder="phone no" id="phone" required>
           <textarea rows="10" name="message" placeholder="type something" id="message" required></textarea>
-          <button class="btn" onclick=send(event)> <i class="ri-telegram-fill"></i> send</button>
+          <button class="btn" type="submit"> <i class="ri-telegram-fill"></i> send</button>
         </form>
       </section>
 
 
-      <section class="section__container contact__container" >
+      <section class="section__container contact__container">
         <div class="logo">hire Me</div>
         <h2 class="section__header">Let's Talk With Me!</h2>
         <p class="section__description">
@@ -306,10 +306,11 @@
       <footer class="footer">
         Copyright © 2023 Web Design Mastery. All rights reserved.
       </footer>
-
+      <script src="config.js"></script>
+      <!-- <script src="main.js"></script> -->
       <script src="https://unpkg.com/scrollreveal"></script>
-      <script src="main.js"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+      <script src="main.js"></script>
 
 </body>
 
