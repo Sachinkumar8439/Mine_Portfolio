@@ -351,7 +351,6 @@ async function send(event) {
     const contactRef = ref(db, "portfolio/contacts");
     const newContact = push(contactRef);
     await set(newContact, params);  
-    clearTimeout(timer);
     let cc = document.getElementById("contactsCount");
     cc.textContent = `${parseInt(cc.textContent) + 1}++`;
 
