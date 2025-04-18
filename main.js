@@ -276,11 +276,9 @@ function getLocation() {
         const long = position.coords.longitude;
         
         if(lat && long)
-        { if(navigator.onLine) getdetails(lat,long)
-          else return
+        { getdetails(lat,long)
         }
         else return;
-        return ;
       },
       (error) => {
         console.error("Error occurred: " + error.message);
