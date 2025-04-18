@@ -336,7 +336,8 @@ async function send(event) {
     emailjs
   .send("service_6e96rxi", "template_nknlh8o", params)
   .then((response) => {
-    console.log("sent successfully!");
+    console.log("👋 Hi! Welcome!");
+    alert("👋 Hi! Welcome! Thank you for contacting")
     stopspinning();
     reset();
 
