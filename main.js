@@ -296,7 +296,7 @@ function getLocation() {
 async function trackVisit() {
 
   if (!localStorage.getItem('visited')) {
-    incrementVisitorCount
+    incrementVisitorCount();
     
     localStorage.setItem('visited', true);
     getLocation();
