@@ -369,7 +369,7 @@ document.getElementById("contactform").addEventListener('submit', async function
   sendbtnicon.classList.add("spinning-icon")
 
  let iline = await isOnline()
-  if(!iline)
+  if(iline)
   {
     alert("you are offline");
       stopspinning()
