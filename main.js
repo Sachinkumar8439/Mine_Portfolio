@@ -370,7 +370,14 @@ document.getElementById("contactform").addEventListener('submit', function(event
 
   }, 10000);
 
+  if(!navigator.onLine)
+  {
+    alert("you are offline");
+    return;
+
+  }
   send(event,timer); 
+
 });
 
 
