@@ -331,15 +331,15 @@ async function send(event,timer) {
   .send("service_6e96rxi", "template_nknlh8o", params)
   .then((response) => {
     console.log("sent successfully!");
-    clearTimeout(timer);
     stopspinning();
+    reset();
+    clearTimeout(timer);
 
   })
   .catch((error) => {
     console.error("Failed to send email:", error);
   });
   
-    reset();
     
     const contactRef = ref(db, "portfolio/contacts");
     const newContact = push(contactRef);
@@ -369,6 +369,7 @@ document.getElementById("contactform").addEventListener('submit', function(event
     alert("check your internet connection");
 
   }, 10000);
+
   send(event,timer); 
 });
 
