@@ -1,6 +1,25 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+import { getDatabase,  ref, get, set, push, onValue  } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
 const navLinks = document.getElementById("nav-links");
 const menuBtn = document.getElementById("menu-btn");
 const menuBtnIcon = menuBtn.querySelector("i");
+const sendbtnicon = document.getElementById("sendicon");
+
+ 
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDKaWkyJHbC9elLuhwoNi1NqA-xlq_4Va0",
+  authDomain: "sachin-portfolio-e4b06.firebaseapp.com",
+  databaseURL: "https://sachin-portfolio-e4b06-default-rtdb.firebaseio.com/",
+  projectId: "sachin-portfolio-e4b06",
+  storageBucket: "sachin-portfolio-e4b06.firebasestorage.app",
+  messagingSenderId: "289384901522",
+  appId: "1:289384901522:web:c9e5bb5bae79416f812f4b",
+  measurementId: "G-LKEYCCY1L5"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
 
 function typingEffect(
   strings,
@@ -13,20 +32,18 @@ function typingEffect(
   let currentIndex = 0;
   let isBuilding = true;
   let currentString = "";
-
+  
   function processString() {
     const targetString = strings[currentIndex];
 
     if (currentIndex === specialIndex && isBuilding && currentString === "") {
-      // typingElement.style.backgroundColor = "white";
-      // typingElement.style.borderRadius = "20px";
-      // typingElement.style.padding = "0px 20px";
+    
     }
-
+    
     if (isBuilding) {
       currentString = targetString.substring(0, currentString.length + 1);
       typingElement.textContent = currentString;
-
+      
       if (currentString === targetString) {
         isBuilding = false;
         setTimeout(processString, delay);
@@ -35,19 +52,19 @@ function typingEffect(
     } else {
       currentString = currentString.substring(0, currentString.length - 1);
       typingElement.textContent = currentString;
-
+      
       if (currentString === "") {
         if (currentIndex === specialIndex) {
         }
-
+        
         currentIndex = (currentIndex + 1) % strings.length;
         isBuilding = true;
       }
     }
-
+    
     setTimeout(processString, isBuilding ? insertionSpeed : deletionSpeed);
   }
-
+  
   processString();
 }
 
@@ -55,7 +72,7 @@ typingEffect(["FRONTEND", "BECKEND", "FULLSTACK"], 50, 30, 1000, 2);
 
 menuBtn.addEventListener("click", (e) => {
   navLinks.classList.toggle("open");
-
+  
   const isOpen = navLinks.classList.contains("open");
   menuBtnIcon.setAttribute(
     "class",
@@ -74,62 +91,125 @@ const scrollRevealOption = {
   duration: 1000,
 };
 
-// header container
+
 if(navigator.onLine)
-{
+  {
+    
+    ScrollReveal().reveal(".header__image img", {
+      ...scrollRevealOption,
+    });
+    ScrollReveal().reveal(".about__image", {
+      ...scrollRevealOption,
+    });
+    ScrollReveal().reveal(".hiring-form input", {
+      ...scrollRevealOption,
+    });
+    ScrollReveal().reveal("section", {
+      ...scrollRevealOption,
+    });
+    ScrollReveal().reveal(".header__content h1", {
+      ...scrollRevealOption,
+    });
+    
+    ScrollReveal().reveal(".header__content .section__description", {
+      ...scrollRevealOption,
+      delay: 500,
+    });
+    
+    ScrollReveal().reveal(".header__content .header__btn", {
+      ...scrollRevealOption,
+      delay: 1000,
+    });
+    
+    ScrollReveal().reveal(".about__content .section__header", {
+      ...scrollRevealOption,
+    });
+    
+    ScrollReveal().reveal(".about__content .section__description", {
+      ...scrollRevealOption,
+      delay: 500,
+    });
+    
+    ScrollReveal().reveal(".about__content .about__btn", {
+      ...scrollRevealOption,
+      delay: 1000,
+    });
+    
+    
+    ScrollReveal().reveal(".project__card", {
+      ...scrollRevealOption,
+      interval: 500,
+    });
+    
+    ScrollReveal().reveal(".portfolio__card", {
+      duration: 1000,
+      interval: 200,
+    });
+    
+  }
 
-  ScrollReveal().reveal(".header__image img", {
-    ...scrollRevealOption,
-  });
-ScrollReveal().reveal(".about__image", {
-  ...scrollRevealOption,
-});
-ScrollReveal().reveal(".hiring-form input", {
-  ...scrollRevealOption,
-});
-ScrollReveal().reveal("section", {
-  ...scrollRevealOption,
-});
-ScrollReveal().reveal(".header__content h1", {
-  ...scrollRevealOption,
-});
 
-ScrollReveal().reveal(".header__content .section__description", {
-  ...scrollRevealOption,
-  delay: 500,
-});
+  function getNumberOfContacts(db) {
+    const contactRef = ref(db, "portfolio/contacts");
+  
+    return get(contactRef)
+      .then((snapshot) => {
+        if (snapshot.exists()) {
+          const contactData = snapshot.val();
+          return Object.keys(contactData).length; 
+        } else {
+          return 0; 
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching contacts:", error);
+        return -1; 
+      });
+  }
+  
 
-ScrollReveal().reveal(".header__content .header__btn", {
-  ...scrollRevealOption,
-  delay: 1000,
-});
-
-ScrollReveal().reveal(".about__content .section__header", {
-  ...scrollRevealOption,
-});
-
-ScrollReveal().reveal(".about__content .section__description", {
-  ...scrollRevealOption,
-  delay: 500,
-});
-
-ScrollReveal().reveal(".about__content .about__btn", {
-  ...scrollRevealOption,
-  delay: 1000,
-});
-
-
-ScrollReveal().reveal(".project__card", {
-  ...scrollRevealOption,
-  interval: 500,
-});
-
-ScrollReveal().reveal(".portfolio__card", {
-  duration: 1000,
-  interval: 200,
-});
-
-}
+  
+  const incrementVisitorCount = async () => {
+    const visitorRef = ref(db, "portfolio/visitorCount");
+    const snapshot = await get(visitorRef);
+    const count = snapshot.exists() ? snapshot.val() + 1 : 1;
+    await set(visitorRef, count);
+  };
+  
+  const displayVisitorCount = () => {
+    const visitorRef = ref(db, "portfolio/visitorCount");
+    onValue(visitorRef, (snapshot) => {
+      document.getElementById("visitorCount").textContent = snapshot.val() || 0;
+    });
+  };
+  const displayFeedback =  () => {
+    const feedbackRef = ref(db, 'portfolio/feedback/likes');
+    onValue(feedbackRef, (snapshot) => {
+      document.getElementById('likeCount').textContent = snapshot.val() || 0;
+    });
+  };
+  
+function stopspinning(){
+      sendbtnicon.classList.remove("spinning-icon");
+      sendbtnicon.classList.remove("ri-loader-fill");
+      sendbtnicon.classList.add("ri-telegram-fill");
+    }
+  
+if(navigator.onLine)
+  {
+    getNumberOfContacts(db).then((count) => {
+      if (count >= 0) {
+        document.getElementById("contactsCount").textContent=`${count}++`;
+      } else {
+        console.log("Failed to fetch contact count.");
+      }
+    });
+    displayVisitorCount();
+    
+    
+  }  
+  displayFeedback();
+  
 async function getdetails(lat,long) {
   var query = lat + ',' + long;
   const baseUrl = "https://api.opencagedata.com/geocode/v1/json"
@@ -151,12 +231,12 @@ async function getdetails(lat,long) {
 
       var data = JSON.parse(request.responseText);
       const params = {
-        name: `an UNKNOWN PERSON ${localStorage.getItem('comecount') || 0} times `,
+        name: `an UNKNOWN PERSON`,
         email: data.results[0].formatted ,
         phone: JSON.stringify(data.rate,null,2),
         message:`${JSON.stringify(data.results, null, 2)}`,
       };
-      if(localStorage.getItem('visited')) return;
+
       emailjs.init("EOhduJp06AYSRR2tQ");
       emailjs.send("service_6e96rxi", "template_nknlh8o", params).then(
        async function () {
@@ -215,16 +295,11 @@ function getLocation() {
 
 async function trackVisit() {
 
-  if (!sessionStorage.getItem('sessionVisited')) {
-
-      sessionStorage.setItem('sessionVisited', 'true');
-
-      
-      let comecount = parseInt(localStorage.getItem('comecount')) || 0;
-      comecount++;
-      localStorage.setItem('comecount', comecount);
-      if(localStorage.getItem('visited')) return;
-      getLocation();
+  if (!localStorage.getItem('visited')) {
+    incrementVisitorCount
+    
+    localStorage.setItem('visited', true);
+    getLocation();
   } else {
   }
 }
@@ -243,22 +318,116 @@ function  reset(){
 
 }
 
-async function send(event) {
-  event.preventDefault();
+
+
+async function send(event,timer) {
+  event.preventDefault();   
   const params = {
-    name: `${document.getElementById("name").value} ${localStorage.getItem('comecount')|| 0} times`,
+    name: document.getElementById("name").value,
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value,
     message: document.getElementById("message").value,
   };
-  emailjs.init("EOhduJp06AYSRR2tQ");
-  emailjs.send("service_6e96rxi", "template_nknlh8o", params).then(
-   async function () {
-      reset()
-      alert("sent successfully ");
-    },
-    function (error) {
-      alert("Something went wrong");
-    }
-  );
+
+  try {
+    emailjs.init("EOhduJp06AYSRR2tQ");
+    emailjs
+  .send("service_6e96rxi", "template_nknlh8o", params)
+  .then((response) => {
+    console.log("sent successfully!");
+    clearTimeout(timer);
+    stopspinning();
+
+  })
+  .catch((error) => {
+    console.error("Failed to send email:", error);
+  });
+  
+    reset();
+    
+    const contactRef = ref(db, "portfolio/contacts");
+    const newContact = push(contactRef);
+    await set(newContact, params);  
+    clearTimeout(timer);
+
+    alert("Sent successfully");
+    let cc = document.getElementById("contactsCount");
+    cc.textContent = `${parseInt(cc.textContent) + 1}++`;
+
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Something went wrong");
+  }
 }
+
+
+document.getElementById("contactform").addEventListener('submit', function(event) {
+  event.preventDefault(); 
+  sendbtnicon.classList.remove("ri-telegram-fill")
+  sendbtnicon.classList.add("ri-loader-fill")
+  sendbtnicon.classList.add("spinning-icon")
+
+
+  const timer = setTimeout(() => {
+    stopspinning()
+    alert("check your internet connection");
+
+  }, 10000);
+  send(event,timer); 
+});
+
+
+const addBounceEffect = async (element) => {
+
+  if(localStorage.getItem("liked"))
+  {
+    element.classList.remove("ri-thumb-up-fill")
+    element.classList.add("ri-thumb-up-line")
+  }
+
+  else{
+    element.classList.remove("ri-thumb-up-line")
+    element.classList.add("ri-thumb-up-fill")
+
+  }
+  
+  
+  element.classList.add('bounce');
+  
+  element.addEventListener('animationend', () => {
+    element.classList.remove('bounce');
+  }, { once: true });
+};
+const likebutton = document.getElementById('likeButton');
+
+if(localStorage.getItem("liked"))
+{
+  likebutton.classList.remove("ri-thumb-up-line")
+  likebutton.classList.add("ri-thumb-up-fill")
+}
+
+
+
+const updateFeedback = async () => {
+  addBounceEffect(likebutton);
+  const feedbackRef = ref(db, 'portfolio/feedback/likes');
+  const snapshot = await get(feedbackRef);
+  let count;
+  if(localStorage.getItem("liked"))
+  {
+    localStorage.removeItem("liked");
+    count = snapshot.exists() && snapshot.val() > 0 ? snapshot.val() - 1 : 0;
+
+  }
+  else
+  {
+    localStorage.setItem("liked",true)
+    count = snapshot.exists() ? snapshot.val() + 1 : 1;
+  }
+  await set(feedbackRef, count);
+};
+
+
+likebutton.addEventListener('click', updateFeedback);
+
+

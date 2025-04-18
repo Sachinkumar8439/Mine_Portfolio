@@ -6,6 +6,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet" />
   <link rel="stylesheet" href="styles.css" />
+  <!-- <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js"></script>
+ <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js"></script> -->
+
   <title>Sachin's Portfolio</title>
 </head>
 
@@ -256,32 +259,33 @@
 
         <div class="portfolio__banner">
           <div class="portfolio__banner__card">
-            <span><i class="ri-macbook-line"></i></span>
-            <h4>150+ Projects</h4>
-            <p>Delivered</p>
+            <span><i class="ri-men-line"></i></span>
+            <h4>Visitors</h4>
+            <p id="visitorCount"></p>
           </div>
           <div class="portfolio__banner__card">
-            <span><i class="ri-discuss-line"></i></span>
-            <h4>1500+ Happy</h4>
-            <p>Customers</p>
+            <span><i class="ri-heart-line"></i></span>
+            <h4>Thumbs Up</h4>
+            <div style="display: flex;align-items: center;gap: 10px;margin-top: 3px;"> <i style="font-size: 25px;cursor: pointer;" class="ri-thumb-up-line" id="likeButton"></i><p id="likeCount"></p></div>
           </div>
           <div class="portfolio__banner__card">
-            <span><i class="ri-heart-fill"></i></span>
-            <h4>2700+ Lovely</h4>
-            <p>Feedbacks</p>
+            <span><i class="ri-contacts-fill"></i></span>
+            <h4>Collaborators</h4>
+            <div style="display: flex;align-items: center;gap: 10px;margin-top: 3px;"> <i style="font-size: 25px;" class="ri-phone-line" id=""></i><p id="contactsCount"></p></div>
           </div>
         </div>
       </section>
 
       <section class="section__container hiring-form" id="contact">
 
-        <form onsubmit="send(event)">
+        <form id="contactform">
           <h2> <i class="ri-contacts-fill"></i> Contact me</h2>
           <input type="text" placeholder="name" id="name" required>
           <input type="email" placeholder="email" id="email" required>
           <input type="tel" placeholder="phone no" id="phone" required>
           <textarea rows="10" name="message" placeholder="type something" id="message" required></textarea>
-          <button class="btn" type="submit"> <i class="ri-telegram-fill"></i> send</button>
+          <!-- <i class="ri-loader-line"></i> -->
+          <button style="padding: 10px;border-radius: 10px;width: 25%;" class="btn" type="submit"> <i style="font-size: 30px;" class="ri-telegram-fill" id="sendicon"></i></button>
         </form>
       </section>
 
@@ -306,11 +310,11 @@
       <footer class="footer">
         Copyright © 2023 Web Design Mastery. All rights reserved.
       </footer>
+  
       <script src="config.js"></script>
-      <!-- <script src="main.js"></script> -->
+      <script type="module" src="main.js"></script>
       <script src="https://unpkg.com/scrollreveal"></script>
       <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-      <script src="main.js"></script>
 
 </body>
 
