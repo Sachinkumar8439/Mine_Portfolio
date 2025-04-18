@@ -362,14 +362,14 @@ async function send(event) {
 }
 
 
-document.getElementById("contactform").addEventListener('submit', function(event) {
+document.getElementById("contactform").addEventListener('submit', async function(event) {
   event.preventDefault(); 
   sendbtnicon.classList.remove("ri-telegram-fill")
   sendbtnicon.classList.add("ri-loader-fill")
   sendbtnicon.classList.add("spinning-icon")
 
-
-  if(!navigator.onLine)
+ let iline = await isOnline()
+  if(!iline)
   {
     alert("you are offline");
       stopspinning()
