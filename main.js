@@ -320,7 +320,8 @@ function  reset(){
 
 }
 
-
+const data = fetch("http://localhost:5000/");
+        console.log(data);
 
 async function send(event) {
   event.preventDefault();   
