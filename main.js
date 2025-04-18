@@ -295,8 +295,6 @@ async function trackVisit() {
 
   if (!localStorage.getItem('visited')) {
     incrementVisitorCount();
-    
-    localStorage.setItem('visited', true);
     getLocation();
   } else {
   }
@@ -429,3 +427,4 @@ const updateFeedback = async () => {
 likebutton.addEventListener('click', updateFeedback);
 
 
+// localStorage.clear()
