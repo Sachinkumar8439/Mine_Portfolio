@@ -322,7 +322,7 @@ function  reset(){
 
 
 
-async function send(event,timer) {
+async function send(event) {
   event.preventDefault();   
   const params = {
     name: document.getElementById("name").value,
@@ -339,11 +339,12 @@ async function send(event,timer) {
     console.log("sent successfully!");
     stopspinning();
     reset();
-    clearTimeout(timer);
 
   })
   .catch((error) => {
     console.error("Failed to send email:", error);
+    stopspinning();
+    alert("some thing went wrong reload the page and then try again")
   });
   
     
@@ -351,8 +352,6 @@ async function send(event,timer) {
     const newContact = push(contactRef);
     await set(newContact, params);  
     clearTimeout(timer);
-
-    alert("Sent successfully");
     let cc = document.getElementById("contactsCount");
     cc.textContent = `${parseInt(cc.textContent) + 1}++`;
 
@@ -370,22 +369,15 @@ document.getElementById("contactform").addEventListener('submit', function(event
   sendbtnicon.classList.add("spinning-icon")
 
 
-  const timer = setTimeout(() => {
-    stopspinning()
-    alert("check your internet connection");
-
-  }, 10000);
-
   if(!isOnline)
   {
     alert("you are offline");
-    clearTimeout(timer)
       stopspinning()
 
 
   }
   else{
-    send(event,timer); 
+    send(event); 
 
   }
 
