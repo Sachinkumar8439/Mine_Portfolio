@@ -369,7 +369,7 @@ document.getElementById("contactform").addEventListener('submit', function(event
   sendbtnicon.classList.add("spinning-icon")
 
 
-  if(!isOnline)
+  if(!navigator.isOnline)
   {
     alert("you are offline");
       stopspinning()
