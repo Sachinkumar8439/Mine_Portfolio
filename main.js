@@ -18,6 +18,12 @@ const firebaseConfig = {
   measurementId: "G-LKEYCCY1L5"
 };
 
+async function  isOnline() {
+  return fetch("https://www.google.com", { method: "HEAD" })
+    .then(() => true) 
+    .catch(() => false); 
+}
+
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
@@ -370,13 +376,18 @@ document.getElementById("contactform").addEventListener('submit', function(event
 
   }, 10000);
 
-  if(!navigator.onLine)
+  if(!isOnline)
   {
     alert("you are offline");
-    return;
+    clearTimeout(timer)
+      stopspinning()
+
 
   }
-  send(event,timer); 
+  else{
+    send(event,timer); 
+
+  }
 
 });
 
