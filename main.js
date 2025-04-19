@@ -5,7 +5,12 @@ const menuBtn = document.getElementById("menu-btn");
 const menuBtnIcon = menuBtn.querySelector("i");
 const sendbtnicon = document.getElementById("sendicon");
 
- 
+document.getElementById("name").value= sessionStorage.getItem("name")||'';
+document.getElementById("email").value = sessionStorage.getItem("email")||'';;
+document.getElementById("phone").value = sessionStorage.getItem("phone")||'';;
+ document.getElementById("message").value = sessionStorage.getItem("message")||'';
+
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyDKaWkyJHbC9elLuhwoNi1NqA-xlq_4Va0",
@@ -19,6 +24,51 @@ const firebaseConfig = {
 };
 
 
+const checkOnlineStatus = async () => {
+  try {
+    const response = await fetch('https://www.google.com/', {
+      method: 'HEAD',
+      mode: 'no-cors',
+    });
+    return true; 
+  } catch {
+    return false; 
+  }
+};
+
+
+let flag = false;
+
+const interval = setInterval(async() => {
+  const isonline = await checkOnlineStatus()
+
+  if(!isonline)
+  {
+    if(!flag)
+      {
+        alert("you are offline check your connection")
+        flag = true;
+  
+      }   
+  }
+  else
+  {
+    if(flag)
+    {
+      sessionStorage.setItem('name',document.getElementById("name").value)
+      sessionStorage.setItem('email',document.getElementById("email").value)
+      sessionStorage.setItem('phone',document.getElementById("phone").value)
+      sessionStorage.setItem('message',document.getElementById("message").value)
+      alert("your are back online")
+      flag = false;
+      clearInterval(interval)
+      window.location.reload();
+
+    }
+  }
+
+  
+}, 4000);
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -151,7 +201,7 @@ if(navigator.onLine)
   }
 
   function reloadProject() {
-    window.location.reload(); // Reloads the page
+    window.location.reload(); 
   }
 
 
@@ -195,7 +245,7 @@ if(navigator.onLine)
     });
   };
   
-function stopspinning(){
+async function stopspinning(){
       sendbtnicon.classList.remove("spinning-icon");
       sendbtnicon.classList.remove("ri-loader-fill");
       sendbtnicon.classList.add("ri-telegram-fill");
@@ -339,6 +389,7 @@ async function send(event) {
     console.log("👋 Hi! Welcome!");
     alert("👋 Hi! Welcome! Thank you for contacting")
     stopspinning();
+    sessionStorage.clear();
     reset();
 
   })
@@ -368,11 +419,17 @@ document.getElementById("contactform").addEventListener('submit', async function
   sendbtnicon.classList.add("ri-loader-fill")
   sendbtnicon.classList.add("spinning-icon")
 
-
-  if(!navigator.onLine)
+  const isonline = await checkOnlineStatus();
+  if(!isonline)
   {
+    await stopspinning();
+  }
+  
+
+  if(!isonline)
+  {
+    await stopspinning()
     alert("you are offline");
-      stopspinning()
       return;
 
 
@@ -438,19 +495,3 @@ const updateFeedback = async () => {
 
 likebutton.addEventListener('click', updateFeedback);
 
-
-
-function updateOnlineStatus() {
-
-  if (navigator.onLine) {
- 
-    location.reload(); 
-  } else {
-   
-    alert('You are offline!');
-  }
-}
-
-
-window.addEventListener('online', updateOnlineStatus);
-window.addEventListener('offline', updateOnlineStatus);
