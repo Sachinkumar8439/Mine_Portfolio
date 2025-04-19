@@ -18,11 +18,7 @@ const firebaseConfig = {
   measurementId: "G-LKEYCCY1L5"
 };
 
-async function  isOnline() {
-  return fetch("https://www.google.com", { method: "HEAD" })
-    .then(() => true) 
-    .catch(() => false); 
-}
+
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -154,6 +150,10 @@ if(navigator.onLine)
     
   }
 
+  function reloadProject() {
+    window.location.reload(); // Reloads the page
+  }
+
 
   function getNumberOfContacts(db) {
     const contactRef = ref(db, "portfolio/contacts");
@@ -210,10 +210,10 @@ if(navigator.onLine)
         console.log("Failed to fetch contact count.");
       }
     });
-    displayVisitorCount();
     
     
   }  
+  displayVisitorCount();
   displayFeedback();
   
 async function getdetails(lat,long) {
@@ -368,11 +368,12 @@ document.getElementById("contactform").addEventListener('submit', async function
   sendbtnicon.classList.add("ri-loader-fill")
   sendbtnicon.classList.add("spinning-icon")
 
- let iline = await isOnline()
-  if(iline)
+
+  if(!navigator.onLine)
   {
     alert("you are offline");
       stopspinning()
+      return;
 
 
   }
@@ -438,4 +439,18 @@ const updateFeedback = async () => {
 likebutton.addEventListener('click', updateFeedback);
 
 
-// localStorage.clear()
+
+function updateOnlineStatus() {
+
+  if (navigator.onLine) {
+ 
+    location.reload(); 
+  } else {
+   
+    alert('You are offline!');
+  }
+}
+
+
+window.addEventListener('online', updateOnlineStatus);
+window.addEventListener('offline', updateOnlineStatus);
