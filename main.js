@@ -55,13 +55,13 @@ const interval = setInterval(async() => {
   {
     if(flag)
     {
+      clearInterval(interval)
       sessionStorage.setItem('name',document.getElementById("name").value)
       sessionStorage.setItem('email',document.getElementById("email").value)
       sessionStorage.setItem('phone',document.getElementById("phone").value)
       sessionStorage.setItem('message',document.getElementById("message").value)
       alert("your are back online")
       flag = false;
-      clearInterval(interval)
       window.location.reload();
 
     }
