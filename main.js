@@ -68,7 +68,7 @@ const interval = setInterval(async() => {
   }
 
   
-}, 4000);
+}, 3000);
 
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
@@ -200,9 +200,7 @@ if(navigator.onLine)
     
   }
 
-  function reloadProject() {
-    window.location.reload(); 
-  }
+  
 
 
   function getNumberOfContacts(db) {
@@ -353,6 +351,7 @@ async function trackVisit() {
     incrementVisitorCount();
     getLocation();
   } else {
+    return;
   }
 }
 
