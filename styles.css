@@ -382,6 +382,11 @@ nav {
   transition: 0.3s;
   /* cursor: pointer; */
 }
+#slideshow {
+  width: 100%;
+  height: auto;
+  transition: opacity 2s ease-in-out;
+}
 
 .contact__socials a:hover {
   background: var(--gradient-2);

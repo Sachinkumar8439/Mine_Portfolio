@@ -23,6 +23,25 @@ const firebaseConfig = {
   measurementId: "G-LKEYCCY1L5"
 };
 
+const images = [
+  "assets/iitbhu.jpg",
+  "assets/iitbhu1.jpg",
+  "assets/iitbhu2.jpg",
+  "assets/iitbhu3.jpg", 
+  "assets/iitbhu4.jpg", 
+];
+
+let currentImageIndex = 0;
+const slideshow = document.getElementById("slideshow");
+
+setInterval(() => {
+  currentImageIndex = (currentImageIndex + 1) % images.length; 
+  slideshow.style.opacity = 0; 
+  setTimeout(() => {
+    slideshow.src = images[currentImageIndex];
+    slideshow.style.opacity = 1; 
+  }, 1000); 
+}, 3000); 
 
 const checkOnlineStatus = async () => {
   try {
