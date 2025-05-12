@@ -139,7 +139,7 @@ function typingEffect(
   processString();
 }
 
-typingEffect(["FRONTEND", "BECKEND", "FULLSTACK"], 50, 30, 1000, 2);
+typingEffect(["FRONTEND", "BACKEND", "FULLSTACK"], 50, 30, 1000, 2);
 
 menuBtn.addEventListener("click", (e) => {
   navLinks.classList.toggle("open");
